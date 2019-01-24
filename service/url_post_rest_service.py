@@ -24,6 +24,8 @@ def get(path):
         logger.warn("Exception occured when download data from '%s': '%s'", requesturl, e)
         raise
 
+    logger.info("Response json: %s", response.text)
+
     return Response(response=response.text, mimetype='application/json')
 
 
