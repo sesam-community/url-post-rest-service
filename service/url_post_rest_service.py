@@ -16,7 +16,7 @@ def get(path):
     headers = {'Content-Type': 'application/json'}
     data = {'apiKey': apiKey}
 
-    logger.info("Downloading data from: '%s' ('%s')", requesturl, apiKey)
+    logger.info("Downloading data from: '%s'", requesturl)
 
     try:
         response = requests.post(requesturl, data=json.dumps(data), headers=headers)
