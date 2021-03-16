@@ -2,6 +2,7 @@
 
 A simple service that translates get requests to post requests.
 
+[![SesamCommunity CI&CD](https://github.com/sesam-community/url-post-rest-service/actions/workflows/sesam-community-ci-cd.yml/badge.svg)](https://github.com/sesam-community/url-post-rest-service/actions/workflows/sesam-community-ci-cd.yml)
 
 Example system config:
 ----------------------
