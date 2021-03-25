@@ -36,11 +36,14 @@ def get(path):
 
     try:
         response = requests.post(request_url, data=json.dumps(data), headers=headers)
+        logger.info("Got response from %s", request_url)
         response_data = json.loads(response.text)
+        logger.info("Loaded json data from %s", request_url)
 
-        #Error messages may be sent as data with http status code 200 and not as exceptions (http status code 500 for example).
-        #Assumes that if more than one entity is returned from the service, it is not an error message.
+        # Error messages may be sent as data with http status code 200 and not as exceptions (http status code 500 for example).
+        # Assumes that if more than one entity is returned from the service, it is not an error message.
         if response.status_code == 200 and error_is_embedded.lower() == 'true' and len(response_data) == 1:
+            logger.info("Checking if data contains exception!")
             error_entity = response_data[0]
             if error_entity[embedded_error_code_property] != 200:
                 raise Exception(error_entity[embedded_error_message_property])
@@ -49,6 +52,7 @@ def get(path):
         logger.warn("Exception occured when download data from '%s': '%s'", request_url, e)
         raise
 
+    logger.info("Returning response from '%s', %s entities", request_url, len(response_data))
     return Response(
         stream_json(response_data),
         mimetype='application/json'
@@ -70,4 +74,3 @@ if __name__ == '__main__':
     # Start the CherryPy WSGI web server
     cherrypy.engine.start()
     cherrypy.engine.block()
-    
